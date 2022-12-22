@@ -1,6 +1,7 @@
 from numpy.random import randint
 
 from hashing import Hashing
+from search import Search
 
 # 1) Реализовать алгоритмы бинарного и интерполяционного поиска числа x в массиве длины N,
 # элементы которого - случайные целые числа в диапазоне от 0 до M.
@@ -26,10 +27,10 @@ VALUES_SIZE = 11
 TABLE_SIZE = 7
 
 
-def run_hashing():
-    values = generate_array(VALUES_SIZE, MAX_VALUE)
-    print('Values: ', values)
-    hash_table = Hashing(TABLE_SIZE)
+def run_hashing(values, table_size):
+    print('3) Hashing: ')
+
+    hash_table = Hashing(table_size)
 
     for number in values:
         hash_table.insert(number, True)
@@ -37,13 +38,34 @@ def run_hashing():
     hash_table.print()
 
 
+def run_search(values):
+    values.sort()
+    print('Sorted: ', values)
+
+    element = values[randint(0, len(values) - 1)]
+    print(f"1) Search:' {element}")
+
+    binary_search_result = Search.binary_search(values, 0, len(values) - 1, element)
+    print(f"binary_search_result: {binary_search_result}")
+
+    interpolation_search_result = Search.interpolation_search(values, 0, len(values) - 1, element)
+    print(f"interpolation_search_result: {interpolation_search_result}")
+
+
 def generate_array(size, max_value):
     return randint(0, max_value, size)
 
 
 def init():
-    print('3) Hashing: ')
-    run_hashing()
+    # VALUES_SIZE = int(input("Enter VALUES_SIZE: "))
+    # MAX_VALUE = int(input("Enter MAX_VALUE: "))
+    # TABLE_SIZE = int(input("Enter TABLE_SIZE: "))
+
+    values = generate_array(VALUES_SIZE, MAX_VALUE)
+    print('Values: ', values)
+
+    run_search(values)
+    run_hashing(values, TABLE_SIZE)
 
 
 if __name__ == '__main__':
